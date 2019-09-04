@@ -17,10 +17,6 @@ const hash = 'mjw4NzA9O0o_-_9_r-6I9W1gf9YJF8J3BVhSXhC56V'
 module.exports = {
   login: (cb) => {
     console.log('login');
-    let data = {
-      "csrfToken": "PF9ZEE4yf2rYup6D39g0MSndNeHIZflh",
-      "sessionId": "2722206080%3AlkF9bTxfRFaWrV%3A7"
-    }
     Instagram.getCsrfToken().then((csrf) =>
     {
       console.log('csrf', csrf);

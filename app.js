@@ -16,7 +16,11 @@ mongoose.connect("mongodb://root:instagram123@ds217078.mlab.com:17078/instagram"
 
 Instagram.csrfToken = "EOQxTesQ3aPEaOBdntusoryYegQuBdMz"
 Instagram.sessionId = "2722206080%3AxIVkC9aFpftMvH%3A6"
-controller.cron()
+controller.login((err, result) => {
+  if (err) res.json(err);
+  console.log('result', result);
+})
+// controller.cron()
 // (function () {
 //   fs.readFile('./config.json', 'utf-8', (err, data) => {
 //     if (err) console.log('err', err);
@@ -38,32 +42,32 @@ controller.cron()
 // })()
 
 
-
-
-Instagram.getUserDataByUsername("nabil.boudlal").then((t) =>
-{
-  console.log('t', t);
-  // if (t.graphql.hasOwnProperty('user')) {
-  //   let user_id = t.graphql.user.id
-  //   let data = {
-  //     quantity: parseInt(req.query.quantity),
-  //     user_id: parseInt(user_id)
-  //   }
-  //   console.log('data', data);
-  //   controller.getFollowers(data, (err, result) => {
-  //     if (err) res.json(err);
-  //     res.json(result)
-  //   })
-  // }
-
-  // return Instagram.getUserFollowers(t.graphql.user.id).then((t) =>
-  // {
-  //   console.log(t); // - instagram followers for user "username-for-get"
-  // })
-}).catch((err) => {
-  console.log('err', err);
-  return res.json({success: false, message: "something wrong with that user "+ target_user, err: err})
-});
+//
+//
+// Instagram.getUserDataByUsername("nabil.boudlal").then((t) =>
+// {
+//   console.log('t', t);
+//   // if (t.graphql.hasOwnProperty('user')) {
+//   //   let user_id = t.graphql.user.id
+//   //   let data = {
+//   //     quantity: parseInt(req.query.quantity),
+//   //     user_id: parseInt(user_id)
+//   //   }
+//   //   console.log('data', data);
+//   //   controller.getFollowers(data, (err, result) => {
+//   //     if (err) res.json(err);
+//   //     res.json(result)
+//   //   })
+//   // }
+//
+//   // return Instagram.getUserFollowers(t.graphql.user.id).then((t) =>
+//   // {
+//   //   console.log(t); // - instagram followers for user "username-for-get"
+//   // })
+// }).catch((err) => {
+//   console.log('err', err);
+//   return res.json({success: false, message: "something wrong with that user "+ target_user, err: err})
+// });
 
 
 const app = express();
