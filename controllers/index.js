@@ -15,15 +15,15 @@ const hash = 'mjw4NzA9O0o_-_9_r-6I9W1gf9YJF8J3BVhSXhC56V'
 
 
 module.exports = {
-  login: (cb) => {
-    console.log('login');
+  login: (data, cb) => {
+    console.log('login', 'data', data);
     Instagram.getCsrfToken().then((csrf) =>
     {
       console.log('csrf', csrf);
       Instagram.csrfToken = csrf;
     }).then(() =>
     {
-      return Instagram.auth('boudlalnabil', 'hello_insta').then(sessionId =>
+      return Instagram.auth(data.username, data.password).then(sessionId =>
       {
         console.log('sessionId', sessionId);
         Instagram.sessionId = sessionId
