@@ -23,7 +23,7 @@ module.exports = {
       Instagram.csrfToken = csrf;
     }).then(() =>
     {
-      return Instagram.auth('boudlalnabil', 'hello_insta').then(sessionId =>
+      return Instagram.auth('nabil.elghali', 'nb100100').then(sessionId =>
       {
         console.log('sessionId', sessionId);
         Instagram.sessionId = sessionId
