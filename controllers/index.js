@@ -31,12 +31,12 @@ module.exports = {
           "csrfToken": Instagram.csrfToken,
           "sessionId": Instagram.sessionId
         }
+        cb(null, {success: true, ...data})
         console.log('data', data);
-        fs.writeFile("./config.json", JSON.stringify(data), (err) => {
-          if (err) cb({success: false, message: "enable to login"});
-          console.log("Successfully Written to File.");
-          cb(null, {success: true, ...data})
-        });
+        // fs.writeFile("./config.json", JSON.stringify(data), (err) => {
+        //   if (err) cb({success: false, message: "enable to login"});
+        //   console.log("Successfully Written to File.");
+        // });
 
       })
     }).catch(console.error);
