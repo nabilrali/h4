@@ -13,7 +13,7 @@ mongoose.connect("mongodb://root:instagram123@ds217078.mlab.com:17078/instagram"
 
 
 //get Instagram auth info
-Instagram.csrfToken = result.csrfToken
+Instagram.csrfToken = "YJQXAmh682lcCXLC9RxVF7ocJbvuuXpF"
 Instagram.sessionId = "2722206080%3AESeWqYxOKpMDr0%3A4"
 Instagram.getUserDataByUsername("nabil.boudlal").then((t) =>
 {
