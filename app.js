@@ -66,26 +66,26 @@ app.get('/', (req, res) => {
   }
   target_user = target_user.trim().toString();
   console.log('target_user', target_user);
-  return Instagram.getUserDataByUsername(target_user).then((t) =>
-  {
-    if (t.graphql.hasOwnProperty('user')) {
-      let user_id = t.graphql.user.id
-      let data = {
-        quantity: parseInt(req.query.quantity),
-        user_id: parseInt(user_id)
-      }
-      console.log('data', data);
-      controller.getFollowers(data, (err, result) => {
-        if (err) res.json(err);
-        res.json(result)
-      })
-    }
-
-    // return Instagram.getUserFollowers(t.graphql.user.id).then((t) =>
-    // {
-    //   console.log(t); // - instagram followers for user "username-for-get"
-    // })
-  }).catch((err) => {
-    return res.json({success: false, message: "something wrong with that user "+ target_user, err: err})
-  });
+  // return Instagram.getUserDataByUsername(target_user).then((t) =>
+  // {
+  //   if (t.graphql.hasOwnProperty('user')) {
+  //     let user_id = t.graphql.user.id
+  //     let data = {
+  //       quantity: parseInt(req.query.quantity),
+  //       user_id: parseInt(user_id)
+  //     }
+  //     console.log('data', data);
+  //     controller.getFollowers(data, (err, result) => {
+  //       if (err) res.json(err);
+  //       res.json(result)
+  //     })
+  //   }
+  //
+  //   // return Instagram.getUserFollowers(t.graphql.user.id).then((t) =>
+  //   // {
+  //   //   console.log(t); // - instagram followers for user "username-for-get"
+  //   // })
+  // }).catch((err) => {
+  //   return res.json({success: false, message: "something wrong with that user "+ target_user, err: err})
+  // });
 })
