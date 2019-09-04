@@ -14,28 +14,32 @@ mongoose.connect("mongodb://root:instagram123@ds217078.mlab.com:17078/instagram"
 
 //get Instagram auth info
 
-// (function () {
-//   fs.readFile('./config.json', 'utf-8', (err, data) => {
-//     if (err) console.log('err', err);
-//     data = JSON.parse(data);
-//     console.log('data', data);
-//
-//     if (data.csrfToken && data.sessionId) {
-//       Instagram.csrfToken = data.csrfToken
-//       Instagram.sessionId = data.sessionId
-//       controller.cron()
-//
-//     }else {
-//       controller.login((err, result) => {
-//         if (err) console.log('err', err);
-//         Instagram.csrfToken = result.csrfToken,
-//         Instagram.sessionId = result.sessionId
-//         controller.cron()
-//
-//       })
-//     }
-//   })
-// })()
+(function () {
+  fs.readFile('./config.json', 'utf-8', (err, data) => {
+    if (err) console.log('err', err);
+    data = JSON.parse(data);
+    console.log('data', data);
+
+    if (data.csrfToken && data.sessionId) {
+      Instagram.csrfToken = data.csrfToken
+      Instagram.sessionId = data.sessionId
+      controller.cron()
+
+    }else {
+      let obj = {
+        username: "nabil.elghali",
+        password: "nb100100"
+      }
+      controller.login(obj, (err, result) => {
+        if (err) console.log('err', err);
+        Instagram.csrfToken = result.csrfToken,
+        Instagram.sessionId = result.sessionId
+        controller.cron()
+
+      })
+    }
+  })
+})()
 
 
 
