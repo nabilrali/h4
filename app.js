@@ -13,39 +13,7 @@ mongoose.connect("mongodb://root:instagram123@ds217078.mlab.com:17078/instagram"
 
 
 //get Instagram auth info
-Instagram.csrfToken = "YJQXAmh682lcCXLC9RxVF7ocJbvuuXpF"
-Instagram.sessionId = "2722206080%3AESeWqYxOKpMDr0%3A4"
-Instagram.getUserDataByUsername("nabil.boudlal").then((t) =>
-{
-    console.log('t', t);
-    // if (t.graphql.hasOwnProperty('user')) {
-    //     let user_id = t.graphql.user.id
-    //     let data = {
-    //         quantity: parseInt(req.query.quantity),
-    //         user_id: parseInt(user_id)
-    //       }
-    //       console.log('data', data);
-    //       controller.getFollowers(data, (err, result) => {
-    //           if (err) res.json(err);
-    //           res.json(result)
-    //         })
-    //       }
-    //
-    //       return Instagram.getUserFollowers(t.graphql.user.id).then((t) =>
-    //       {
-    //           console.log(t); // - instagram followers for user "username-for-get"
-    //         })
-}).catch((err) => {
-              console.log('err', err);
-              return res.json({success: false, message: "something wrong with that user "+ target_user, err: err})
-            });
 
-// controller.login((err, result) => {
-//   if (err) res.json(err);
-//   console.log('result', result);
-//   // controller.cron()
-//
-// })
 // (function () {
 //   fs.readFile('./config.json', 'utf-8', (err, data) => {
 //     if (err) console.log('err', err);
@@ -53,6 +21,9 @@ Instagram.getUserDataByUsername("nabil.boudlal").then((t) =>
 //     console.log('data', data);
 //
 //     if (data.csrfToken && data.sessionId) {
+//       Instagram.csrfToken = data.csrfToken
+//       Instagram.sessionId = data.sessionId
+//       controller.cron()
 //
 //     }else {
 //       controller.login((err, result) => {
@@ -66,6 +37,14 @@ Instagram.getUserDataByUsername("nabil.boudlal").then((t) =>
 //   })
 // })()
 
+
+controller.login((err, result) => {
+    if (err) console.log('err', err);
+    console.log('result', result);
+    Instagram.csrfToken = result.csrfToken,
+    Instagram.sessionId = result.sessionId
+    // controller.cron()
+  })
 
 
 
@@ -96,7 +75,6 @@ app.get('/', (req, res) => {
   console.log('target_user', target_user);
   return Instagram.getUserDataByUsername(target_user).then((t) =>
   {
-    console.log('t', t);
     if (t.graphql.hasOwnProperty('user')) {
       let user_id = t.graphql.user.id
       let data = {
@@ -110,12 +88,11 @@ app.get('/', (req, res) => {
       })
     }
 
-    return Instagram.getUserFollowers(t.graphql.user.id).then((t) =>
-    {
-      console.log(t); // - instagram followers for user "username-for-get"
-    })
+    // return Instagram.getUserFollowers(t.graphql.user.id).then((t) =>
+    // {
+    //   console.log(t); // - instagram followers for user "username-for-get"
+    // })
   }).catch((err) => {
-    console.log('err', err);
     return res.json({success: false, message: "something wrong with that user "+ target_user, err: err})
   });
 })
