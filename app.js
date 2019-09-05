@@ -65,6 +65,8 @@ app.get('/login', (req, res) => {
       console.log('result', result);
       Instagram.csrfToken = result.csrfToken,
       Instagram.sessionId = result.sessionId
+
+      res.json(result)
       // controller.cron()
     })
 })
@@ -84,6 +86,7 @@ app.get('/', (req, res) => {
   console.log('target_user', target_user);
   return Instagram.getUserDataByUsername(target_user).then((t) =>
   {
+    console.log('t', t);
     if (t.graphql.hasOwnProperty('user')) {
       let user_id = t.graphql.user.id
       let data = {
