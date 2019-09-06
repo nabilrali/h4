@@ -281,10 +281,11 @@ module.exports = {
 
 
         /* Get the proper script of the html page which contains the json */
-        let array = [4, 3]
+        let array = [4, 3, 2, 5]
 
         for (var i = 0; i < array.length; i++) {
           let script = $('script').eq(array[i]).html();
+          console.log('script', script);
           try {
             let { entry_data: { ProfilePage : {[0] : { graphql : {user} }} } } = JSON.parse(/window\._sharedData = (.+);/g.exec(script)[1]);
             console.log(user.id);
