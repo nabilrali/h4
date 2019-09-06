@@ -251,6 +251,7 @@ module.exports = {
 
   getUserId: (username, cb) => {
     const BASE_URL = `https://www.instagram.com/${username}/`;
+    console.log('url----', BASE_URL);
     /* Send the request and get the html content */
     // let response = await request(
     //     BASE_URL,
@@ -273,6 +274,8 @@ module.exports = {
         'upgrade-insecure-requests': '1',
         'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36'
       }, (err, response, body) => {
+        console.log('-------------');
+        console.log('body', body);
 
         /* Initiate Cheerio with the response */
         // console.log(JSON.parse(response));
