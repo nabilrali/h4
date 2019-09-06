@@ -275,7 +275,6 @@ module.exports = {
         'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36'
       }, (err, response, body) => {
         console.log('-------------');
-        console.log('body', body);
 
         /* Initiate Cheerio with the response */
         // console.log(JSON.parse(response));
@@ -288,7 +287,6 @@ module.exports = {
 
         for (var i = 0; i < array.length; i++) {
           let script = $('script').eq(array[i]).html();
-          console.log('script', script);
           try {
             let { entry_data: { ProfilePage : {[0] : { graphql : {user} }} } } = JSON.parse(/window\._sharedData = (.+);/g.exec(script)[1]);
             console.log(user.id);
