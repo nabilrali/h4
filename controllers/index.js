@@ -5,6 +5,7 @@ const request = require('request');
 const moment = require('moment');
 const async = require('async');
 var schedule = require('node-schedule');
+const cheerio = require('cheerio');
 Order = require('../models/Order');
 
 let time_rest = 6,
@@ -246,9 +247,60 @@ module.exports = {
     // });
     // console.log('j', j);
 
+  },
+
+  getUserId: (username, cb) => {
+    const BASE_URL = `https://www.instagram.com/${username}/`;
+    /* Send the request and get the html content */
+    // let response = await request(
+    //     BASE_URL,
+    //     {
+    //         'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+    //         'accept-encoding': 'gzip, deflate, br',
+    //         'accept-language': 'en-US,en;q=0.9,fr;q=0.8,ro;q=0.7,ru;q=0.6,la;q=0.5,pt;q=0.4,de;q=0.3',
+    //         'cache-control': 'max-age=0',
+    //         'upgrade-insecure-requests': '1',
+    //         'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36'
+    //     }
+    // );
+
+    request(BASE_URL,
+      {
+        'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+        'accept-encoding': 'gzip, deflate, br',
+        'accept-language': 'en-US,en;q=0.9,fr;q=0.8,ro;q=0.7,ru;q=0.6,la;q=0.5,pt;q=0.4,de;q=0.3',
+        'cache-control': 'max-age=0',
+        'upgrade-insecure-requests': '1',
+        'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36'
+      }, (err, response, body) => {
+
+        /* Initiate Cheerio with the response */
+        // console.log(JSON.parse(response));
+        let $ = cheerio.load(body);
 
 
 
+        /* Get the proper script of the html page which contains the json */
+        let array = [4, 3]
 
-  }
+        for (var i = 0; i < array.length; i++) {
+          let script = $('script').eq(array[i]).html();
+          try {
+            let { entry_data: { ProfilePage : {[0] : { graphql : {user} }} } } = JSON.parse(/window\._sharedData = (.+);/g.exec(script)[1]);
+            console.log(user.id);
+            /* Output the data */
+
+            return cb(null, {success: true, id: user.id})
+          } catch (e) {
+            if (array.length === i+1) {
+              return cb({success: false, message: "something wrong with: "+username})
+            }
+          }
+        }
+        // console.log('script', script);
+        /* Traverse through the JSON of instagram response */
+
+
+      })
+  },
 }

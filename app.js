@@ -43,6 +43,11 @@ mongoose.connect("mongodb://root:instagram123@ds217078.mlab.com:17078/instagram"
 
 
 
+// controller.getUserId("abdurahimisafandffsfd", (err, result) => {
+//   if (err) return console.error();
+//   // console.log('user_id', result.id);
+//
+// })
 
 
 
@@ -74,7 +79,7 @@ app.get('/login', (req, res) => {
 
 app.get('/', (req, res) => {
   console.log(req.query);
-  console.log('instagram', Instagram.csrfToken, Instagram.sessionId);
+
   let {target_user } = req.query
   if (target_user.includes("http") || target_user.includes("instagram")) {
     console.log('yep');
@@ -85,27 +90,27 @@ app.get('/', (req, res) => {
   }
   target_user = target_user.trim().toString();
   console.log('target_user', target_user);
-  return Instagram.getUserDataByUsername(target_user).then((t) =>
-  {
-    console.log('t', t);
-    // if (t.graphql.hasOwnProperty('user')) {
-    //   let user_id = t.graphql.user.id
-    //   let data = {
-    //     quantity: parseInt(req.query.quantity),
-    //     user_id: parseInt(user_id)
-    //   }
-    //   console.log('data', data);
-    //   controller.getFollowers(data, (err, result) => {
-    //     if (err) res.json(err);
-    //     res.json(result)
-    //   })
-    // }
-
-    // return Instagram.getUserFollowers(t.graphql.user.id).then((t) =>
-    // {
-    //   console.log(t); // - instagram followers for user "username-for-get"
-    // })
-  }).catch((err) => {
-    return res.json({success: false, message: "something wrong with that user "+ target_user, err: err})
-  });
+  controller.getUserId(target_user, (err, result) => {
+    if (err) return res.json(err);
+    console.log('user_id', result.id);
+    if (result.id) {
+      let user_id = result.id
+      let data = {
+        quantity: parseInt(req.query.quantity),
+        user_id: parseInt(user_id)
+      }
+      console.log('data', data);
+      controller.getFollowers(data, (err, result) => {
+        if (err) res.json(err);
+        res.json(result)
+      })
+    }
+  })
+  // return Instagram.getUserDataByUsername(target_user).then((t) =>
+  // {
+  //
+  //
+  // }).catch((err) => {
+  //   return res.json({success: false, message: "something wrong with that user "+ target_user, err: err})
+  // });
 })
