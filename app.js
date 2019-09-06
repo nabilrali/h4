@@ -6,6 +6,7 @@ Instagram = new Instagram(),
 fs = require('fs');
 const mongoose = require('mongoose');
 const cron = require('node-cron');
+require('dotenv').config()
 
 const controller = require('./controllers/');
 
@@ -60,7 +61,7 @@ app.use(bodyParser.json());
 
 
 app.listen(process.env.PORT || 8080, () => {
-  console.log(`The App is running in localhost: 3000`);
+  console.log(`The App is running in localhost: ${process.env.PORT}`);
 })
 
 app.get('/login', (req, res) => {
